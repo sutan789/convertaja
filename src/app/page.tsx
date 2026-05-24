@@ -30,8 +30,9 @@ const jsonLd = {
 
 export default function Home() {
   const tools = [
-    { name: 'Link to QR Code', href: '/tools/qr-code', icon: QrCode, isBeta: false },
+    { name: 'Tanda Tangan PDF', href: '/tools/sign-pdf', icon: PenTool, isBeta: false },
     { name: 'Tanda Tangan Digital', href: '/tools/digital-signature', icon: PenTool, isBeta: false },
+    { name: 'Link to QR Code', href: '/tools/qr-code', icon: QrCode, isBeta: false },
     { name: 'Merge PDF', href: '/tools/merge-pdf', icon: Layers, isBeta: false },
     { name: 'Split PDF', href: '/tools/split-pdf', icon: Scissors, isBeta: false },
     { name: 'Image to PDF', href: '/tools/image-to-pdf', icon: FileImage, isBeta: false },
