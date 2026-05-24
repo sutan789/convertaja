@@ -58,18 +58,18 @@ export default function Home() {
         <CursorGlow />
 
         <div className="relative z-10 max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight">
-            Kelola File & <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">QR Code</span><br className="hidden sm:block" /> Lebih Cerdas
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight animate-in fade-in slide-in-from-bottom-6 duration-700">
+            Kelola File & <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 animate-pulse">QR Code</span><br className="hidden sm:block" /> Lebih Cerdas
           </h1>
-          <p className="mt-6 text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-6 text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-8 duration-700 delay-150">
             Platform modern untuk mengubah PDF, memisahkan halaman, hingga membuat QR Code. 
             Berjalan secepat kilat langsung di browser Anda. <span className="font-semibold text-gray-800">Aman & 100% Gratis.</span>
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link href="#tools" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-8 py-4 rounded-xl text-lg font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300">
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-in fade-in zoom-in-95 duration-700 delay-300">
+            <Link href="#tools" className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-8 py-4 rounded-xl text-lg font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
               Mulai Konversi Sekarang
             </Link>
-            <Link href="#tools" className="w-full sm:w-auto bg-white text-gray-700 hover:text-primary border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 px-8 py-4 rounded-xl text-lg font-semibold shadow-sm hover:shadow-md transition-all duration-300">
+            <Link href="#tools" className="w-full sm:w-auto bg-white text-gray-700 hover:text-blue-600 border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 px-8 py-4 rounded-xl text-lg font-semibold shadow-sm hover:shadow-md hover:scale-105 hover:-translate-y-1 transition-all duration-300">
               Lihat Semua Tools
             </Link>
           </div>
@@ -81,22 +81,22 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Tools Unggulan Kami</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tools.map((tool) => (
-              <Link key={tool.name} href={tool.href} className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-transparent hover:ring-2 hover:ring-primary/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden">
-                <div className="absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0"></div>
+            {tools.map((tool, idx) => (
+              <Link key={tool.name} href={tool.href} className="bg-white rounded-2xl p-6 border border-gray-200 hover:border-blue-300 hover:ring-4 hover:ring-blue-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group relative overflow-hidden animate-in fade-in slide-in-from-bottom-8" style={{ animationDelay: `${idx * 50}ms` }}>
+                <div className="absolute -right-12 -top-12 w-32 h-32 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-0"></div>
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-6">
-                    <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-50 text-primary rounded-xl flex items-center justify-center group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:text-white shadow-sm transition-all duration-300 transform group-hover:scale-110">
+                    <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-600 rounded-xl flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30 group-hover:rotate-6 transition-all duration-300 transform group-hover:scale-110">
                       <tool.icon size={28} />
                     </div>
                     {tool.isBeta && (
-                      <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700 ring-1 ring-inset ring-amber-600/20 shadow-sm">
+                      <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-[10px] uppercase font-extrabold text-amber-700 ring-1 ring-inset ring-amber-600/20 shadow-sm group-hover:bg-amber-100 transition-colors">
                         BETA
                       </span>
                     )}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">{tool.name}</h3>
-                  <p className="mt-2 text-sm text-gray-500">Akses alat ini untuk memproses file Anda secara instan dan aman.</p>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors">{tool.name}</h3>
+                  <p className="mt-2 text-sm text-gray-500 group-hover:text-gray-600 transition-colors">Akses alat ini untuk memproses file Anda secara instan dan aman.</p>
                 </div>
               </Link>
             ))}
@@ -109,19 +109,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-16">Bagaimana Cara Kerjanya?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div>
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-500/30">1</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Upload</h3>
+            <div className="group cursor-default">
+              <div className="w-20 h-20 bg-blue-600 text-white rounded-2xl rotate-3 group-hover:rotate-0 flex items-center justify-center text-3xl font-black mx-auto mb-6 shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 group-hover:scale-110 group-hover:bg-indigo-600 transition-all duration-300">1</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Upload</h3>
               <p className="text-gray-500">Pilih file dari komputer atau tarik langsung ke area dropzone kami.</p>
             </div>
-            <div>
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-500/30">2</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Proses</h3>
+            <div className="group cursor-default">
+              <div className="w-20 h-20 bg-blue-600 text-white rounded-2xl -rotate-3 group-hover:rotate-0 flex items-center justify-center text-3xl font-black mx-auto mb-6 shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 group-hover:scale-110 group-hover:bg-indigo-600 transition-all duration-300">2</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Proses</h3>
               <p className="text-gray-500">Sistem kami akan memproses file Anda dalam hitungan detik dengan kualitas tinggi.</p>
             </div>
-            <div>
-              <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-500/30">3</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Download</h3>
+            <div className="group cursor-default">
+              <div className="w-20 h-20 bg-blue-600 text-white rounded-2xl rotate-3 group-hover:rotate-0 flex items-center justify-center text-3xl font-black mx-auto mb-6 shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 group-hover:scale-110 group-hover:bg-indigo-600 transition-all duration-300">3</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Download</h3>
               <p className="text-gray-500">Simpan hasil konversi langsung ke perangkat Anda dengan aman.</p>
             </div>
           </div>
