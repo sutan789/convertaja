@@ -35,7 +35,7 @@ export default function Login() {
         setErrorMessage(result.error);
         setIsLoading(false);
       } else if (result.success) {
-        router.push('/tools/merge-pdf');
+        router.push('/');
         router.refresh(); 
       }
     } catch (error) {
@@ -129,9 +129,9 @@ export default function Login() {
 
           <p className="mt-8 text-center text-sm text-slate-500">
             Belum punya akun?{' '}
-            <a href="#" className="font-bold text-blue-600 hover:text-blue-800 transition-colors">
+            <Link href="/register" className="font-bold text-blue-600 hover:text-blue-800 transition-colors">
               Daftar Sekarang
-            </a>
+            </Link>
           </p>
         </div>
       </div>
