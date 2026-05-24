@@ -1,11 +1,37 @@
 import Link from 'next/link';
-import { FileUp, Cpu, Download, FileText, QrCode, FileImage, Layers, Scissors, FileArchive, CheckCircle2 } from 'lucide-react';
+import type { Metadata } from 'next';
+import { FileUp, Cpu, Download, FileText, QrCode, FileImage, Layers, Scissors, FileArchive, CheckCircle2, PenTool } from 'lucide-react';
 import FeatureCard from '@/components/FeatureCard';
 import CursorGlow from '@/components/CursorGlow';
+
+export const metadata: Metadata = {
+  title: "ConvertAja — Konversi PDF, Word, QR Code Online Gratis",
+  description: "Tools online gratis untuk konversi PDF ke Word, Word ke PDF, Merge PDF, Split PDF, kompres PDF, buat QR Code, dan tanda tangan digital. Cepat dan aman.",
+  alternates: {
+    canonical: '/',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'ConvertAja',
+  url: 'https://convertaja.vercel.app',
+  description: 'Tools online gratis untuk konversi PDF, Word, dan buat QR Code',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://convertaja.vercel.app/?q={search_term_string}',
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
 
 export default function Home() {
   const tools = [
     { name: 'Link to QR Code', href: '/tools/qr-code', icon: QrCode, isBeta: false },
+    { name: 'Tanda Tangan Digital', href: '/tools/digital-signature', icon: PenTool, isBeta: false },
     { name: 'Merge PDF', href: '/tools/merge-pdf', icon: Layers, isBeta: false },
     { name: 'Split PDF', href: '/tools/split-pdf', icon: Scissors, isBeta: false },
     { name: 'Image to PDF', href: '/tools/image-to-pdf', icon: FileImage, isBeta: false },
@@ -16,7 +42,13 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* JSON-LD Structured Data untuk Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
+
       <section className="relative pt-32 pb-28 px-4 sm:px-6 lg:px-8 text-center bg-slate-50 overflow-hidden">
         {/* Modern Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080801a_1px,transparent_1px),linear-gradient(to_bottom,#8080801a_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0"></div>

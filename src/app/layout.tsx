@@ -9,9 +9,82 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const BASE_URL = 'https://convertaja.vercel.app';
+
 export const metadata: Metadata = {
-  title: "ConvertAja — Ubah File & Buat QR Code dengan Mudah",
-  description: "Website tools online praktis untuk konversi dokumen dan pembuatan QR code. Aman, cepat, dan mudah digunakan.",
+  metadataBase: new URL(BASE_URL),
+
+  title: {
+    default: "ConvertAja — Konversi PDF, Word, QR Code Online Gratis",
+    template: "%s | ConvertAja",
+  },
+  description:
+    "ConvertAja adalah tools online gratis untuk konversi PDF ke Word, Word ke PDF, Merge PDF, Split PDF, kompres PDF, buat QR Code, dan tanda tangan digital. Cepat, aman, tanpa install.",
+
+  keywords: [
+    "konversi pdf online",
+    "pdf ke word",
+    "word ke pdf",
+    "merge pdf",
+    "split pdf",
+    "compress pdf",
+    "buat qr code",
+    "qr code gratis",
+    "tanda tangan digital",
+    "image to pdf",
+    "tools pdf gratis",
+    "convertaja",
+    "konversi dokumen online",
+  ],
+
+  authors: [{ name: "ConvertAja" }],
+  creator: "ConvertAja",
+  publisher: "ConvertAja",
+
+  alternates: {
+    canonical: BASE_URL,
+  },
+
+  verification: {
+    google: '07ff977f2182d133',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: BASE_URL,
+    siteName: "ConvertAja",
+    title: "ConvertAja — Konversi PDF, Word, QR Code Online Gratis",
+    description:
+      "Tools online gratis untuk konversi PDF, Word, buat QR Code, dan tanda tangan digital. Cepat, aman, tanpa install aplikasi.",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "ConvertAja — Tools Konversi File Online Gratis",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "ConvertAja — Konversi PDF, Word, QR Code Online Gratis",
+    description:
+      "Tools online gratis untuk konversi PDF, Word, buat QR Code, dan tanda tangan digital.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function RootLayout({

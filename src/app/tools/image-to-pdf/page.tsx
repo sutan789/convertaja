@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ToolHeader from '@/components/ToolHeader';
 import FileUploader from '@/components/FileUploader';
 import { PDFDocument, PageSizes } from 'pdf-lib';
 import { X, FileImage, Settings, ArrowRight } from 'lucide-react';
 
 export default function ImageToPdf() {
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [orientation, setOrientation] = useState<'portrait' | 'landscape'>('portrait');
@@ -94,6 +96,7 @@ export default function ImageToPdf() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      setTimeout(() => router.push('/'), 1000);
 
     } catch (error) {
       console.error("Error converting images to PDF:", error);

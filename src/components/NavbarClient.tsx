@@ -27,7 +27,7 @@ export default function NavbarClient({ isLoggedIn, logoutAction }: NavbarClientP
           {/* Desktop Nav */}
           <div className="hidden md:flex space-x-8">
             <Link href="/" className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">Beranda</Link>
-            <Link href="/tools/merge-pdf" className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">Tools</Link>
+            <Link href="/tools" className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">Tools</Link>
             <Link href="/tentang" className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">Tentang</Link>
             <Link href="/contact" className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors">Kontak</Link>
           </div>
@@ -51,7 +51,7 @@ export default function NavbarClient({ isLoggedIn, logoutAction }: NavbarClientP
               </Link>
             )}
             
-            <Link href={isLoggedIn ? "/tools/merge-pdf" : "/login"} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-5 py-2 rounded-lg text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+            <Link href={isLoggedIn ? "/tools" : "/login"} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-5 py-2 rounded-lg text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
               {isLoggedIn ? "Mulai Convert" : "Get Started"}
             </Link>
           </div>
@@ -80,7 +80,7 @@ export default function NavbarClient({ isLoggedIn, logoutAction }: NavbarClientP
               Beranda
             </Link>
             <Link 
-              href="/tools/merge-pdf" 
+              href="/tools" 
               onClick={() => setIsMobileMenuOpen(false)}
               className="block px-3 py-3 rounded-md text-base font-medium text-gray-900 hover:bg-blue-50 hover:text-primary transition-colors"
             >
@@ -130,7 +130,7 @@ export default function NavbarClient({ isLoggedIn, logoutAction }: NavbarClientP
             
             <div className="pt-4">
               <Link 
-                href={isLoggedIn ? "/tools/merge-pdf" : "/login"} 
+                href={isLoggedIn ? "/tools" : "/login"} 
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block w-full text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-3 rounded-lg text-base font-bold shadow-md"
               >

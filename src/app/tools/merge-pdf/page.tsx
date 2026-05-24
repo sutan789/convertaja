@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ToolHeader from '@/components/ToolHeader';
 import FileUploader from '@/components/FileUploader';
 import { PDFDocument } from 'pdf-lib';
 import { X, ArrowUp, ArrowDown, FileText, Layers } from 'lucide-react';
 
 export default function MergePdf() {
+  const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -62,6 +64,11 @@ export default function MergePdf() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      
+      // Redirect ke beranda setelah jeda 1 detik
+      setTimeout(() => {
+        router.push('/');
+      }, 1000);
     } catch (error) {
       console.error("Error merging PDFs:", error);
       alert("Terjadi kesalahan saat menggabungkan PDF. Pastikan file tidak rusak.");

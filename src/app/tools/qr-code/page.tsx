@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import ToolHeader from '@/components/ToolHeader';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { Download, Info } from 'lucide-react';
 
 export default function QrCodeGenerator() {
+  const router = useRouter();
   const [url, setUrl] = useState('https://convertaja.com');
   const [size, setSize] = useState(512);
   const [level, setLevel] = useState('M');
@@ -21,6 +23,7 @@ export default function QrCodeGenerator() {
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
+      setTimeout(() => router.push('/'), 1000);
     }
   };
 
@@ -36,6 +39,7 @@ export default function QrCodeGenerator() {
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
+      setTimeout(() => router.push('/'), 1000);
     }
   };
 

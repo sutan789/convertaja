@@ -43,3 +43,38 @@ export async function loginWithEmail(formData: FormData) {
     return { error: 'Terjadi kesalahan sistem' };
   }
 }
+
+export async function registerUser(formData: FormData) {
+  const name = formData.get('name')?.toString();
+  const email = formData.get('email')?.toString();
+  const password = formData.get('password')?.toString();
+  const confirmPassword = formData.get('confirmPassword')?.toString();
+
+  if (!name || !email || !password || !confirmPassword) {
+    return { error: 'Semua kolom harus diisi' };
+  }
+
+  if (password !== confirmPassword) {
+    return { error: 'Konfirmasi password tidak cocok' };
+  }
+
+  try {
+    // Cek apakah email sudah terdaftar
+    const [existingUsers] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
+    if ((existingUsers as any[]).length > 0) {
+      return { error: 'Email sudah terdaftar' };
+    }
+
+    // Hash password
+    const hash = await bcrypt.hash(password, 10);
+
+    // Insert user baru
+    await pool.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hash]);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Registration error:', error);
+    return { error: 'Terjadi kesalahan sistem saat mendaftar' };
+  }
+}
+

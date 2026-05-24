@@ -1,11 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ToolHeader from '@/components/ToolHeader';
 import FileUploader from '@/components/FileUploader';
 import { Download, Loader2 } from 'lucide-react';
 
 export default function WordToPdf() {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -15,48 +17,45 @@ export default function WordToPdf() {
     setIsProcessing(true);
 
     try {
-      // Load library eksternal melalui CDN secara dinamis
-      // Ini 100% mencegah error Webpack SSR dan modul yang hilang
-      const loadScript = (src: string) => new Promise((resolve, reject) => {
-        if (document.querySelector(`script[src="${src}"]`)) return resolve(true);
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js');
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
+      // Import library secara dinamis untuk menghindari error SSR Next.js
+      const mammoth = (await import('mammoth')).default || await import('mammoth');
+      const html2pdf = (await import('html2pdf.js')).default || await import('html2pdf.js');
 
       // 1. Baca isi Word (DOCX) menjadi ArrayBuffer
       const arrayBuffer = await file.arrayBuffer();
-      
+
       // 2. Konversi DOCX ke HTML dengan Mammoth
-      // @ts-ignore
-      const result = await window.mammoth.convertToHtml({ arrayBuffer });
+      const result = await mammoth.convertToHtml({ arrayBuffer });
       const htmlContent = result.value;
 
-      // 3. Masukkan HTML ke elemen sementara
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = htmlContent;
-      tempDiv.style.padding = '40px';
-      tempDiv.style.fontFamily = 'Arial, sans-serif';
-      tempDiv.style.lineHeight = '1.6';
-      tempDiv.style.color = '#000';
-      
+      if (!htmlContent || !htmlContent.trim()) {
+        throw new Error('Dokumen Word tampak kosong atau tidak bisa dibaca.');
+      }
+
+      // 3. Buat elemen pembungkus (TIDAK PERLU append ke body, html2pdf bisa menangani langsung)
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = htmlContent;
+      // Berikan styling dasar agar PDF rapi
+      wrapper.style.padding = '20px 40px';
+      wrapper.style.fontFamily = 'Arial, sans-serif';
+      wrapper.style.fontSize = '12pt';
+      wrapper.style.lineHeight = '1.6';
+      wrapper.style.color = '#000';
+      wrapper.style.background = '#fff';
+
       // 4. Konversi HTML ke PDF dengan html2pdf.js
       const opt = {
-        margin:       10,
-        filename:     file.name.replace('.docx', '.pdf'),
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        margin:      10,
+        filename:    file.name.replace(/\.docx$/i, '.pdf'),
+        image:       { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
       };
 
+      // Generate PDF
       // @ts-ignore
-      const pdfBlob = await window.html2pdf().set(opt).from(tempDiv).output('blob');
-      
+      const pdfBlob = await html2pdf().set(opt).from(wrapper).output('blob');
+
       const url = URL.createObjectURL(pdfBlob);
       setPdfUrl(url);
 
@@ -70,26 +69,26 @@ export default function WordToPdf() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <ToolHeader 
-        title="Word Mentah ke PDF" 
+      <ToolHeader
+        title="Word ke PDF"
         description="Konversi isi teks dari dokumen Word (DOCX) Anda menjadi PDF secara instan."
       />
 
       {!pdfUrl ? (
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
-          
+
           {/* Warning Banner */}
-          <div className="mb-6 p-4 bg-orange-50 rounded-xl border border-orange-100 flex items-start">
-            <svg className="text-orange-500 mr-3 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-100 flex items-start gap-3">
+            <svg className="text-blue-500 shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
             <div>
-              <h4 className="font-semibold text-orange-900 text-sm mb-1">Catatan Keterbatasan (BETA)</h4>
-              <p className="text-sm text-orange-800/80">
-                Alat ini berjalan murni di dalam browser Anda (tanpa server). Oleh karena itu, hasil PDF yang dibuat akan memiliki <strong>tata letak standar (polos)</strong> dan tidak sepenuhnya mempertahankan margin, tabel, warna, atau gambar dari dokumen Word aslinya.
+              <h4 className="font-semibold text-blue-900 text-sm mb-1">Catatan Keterbatasan (BETA)</h4>
+              <p className="text-sm text-blue-800/80">
+                Alat ini berjalan murni di dalam browser Anda (tanpa server). Hasil PDF mungkin tidak sepenuhnya mempertahankan tabel kompleks, gambar, atau warna dari dokumen Word aslinya.
               </p>
             </div>
           </div>
 
-          <FileUploader 
+          <FileUploader
             onFilesSelected={(selectedFiles) => setFile(selectedFiles[0])}
             maxFiles={1}
           />
@@ -99,10 +98,10 @@ export default function WordToPdf() {
               <button
                 onClick={handleConvert}
                 disabled={isProcessing}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all flex items-center"
+                className="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2"
               >
                 {isProcessing ? (
-                  <><Loader2 className="animate-spin mr-2" /> Memproses...</>
+                  <><Loader2 className="animate-spin" size={18} /> Memproses...</>
                 ) : (
                   'Konversi ke PDF'
                 )}
@@ -117,14 +116,19 @@ export default function WordToPdf() {
           </div>
           <h3 className="text-2xl font-bold text-slate-900 mb-2">Konversi Berhasil!</h3>
           <p className="text-slate-500 mb-8">Dokumen Word Anda telah berhasil dikonversi ke PDF.</p>
-          
+
           <div className="flex justify-center space-x-4">
             <a
               href={pdfUrl}
-              download={file?.name.replace('.docx', '.pdf')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all"
+              download={file?.name.replace(/\.docx$/i, '.pdf')}
+              onClick={() => {
+                setTimeout(() => {
+                  router.push('/');
+                }, 1000);
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all inline-flex items-center gap-2"
             >
-              Unduh PDF
+              <Download size={18} /> Unduh PDF
             </a>
             <button
               onClick={() => { setPdfUrl(null); setFile(null); }}

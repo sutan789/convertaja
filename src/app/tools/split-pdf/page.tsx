@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ToolHeader from '@/components/ToolHeader';
 import FileUploader from '@/components/FileUploader';
 import { PDFDocument } from 'pdf-lib';
@@ -8,6 +9,7 @@ import JSZip from 'jszip';
 import { Scissors, FileText, X } from 'lucide-react';
 
 export default function SplitPdf() {
+  const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [splitOption, setSplitOption] = useState<'all' | 'custom'>('all');
@@ -70,6 +72,7 @@ export default function SplitPdf() {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        setTimeout(() => router.push('/'), 1000);
 
       } else {
         // Custom range into a single PDF
@@ -94,6 +97,7 @@ export default function SplitPdf() {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        setTimeout(() => router.push('/'), 1000);
       }
     } catch (error) {
       console.error("Error splitting PDF:", error);
