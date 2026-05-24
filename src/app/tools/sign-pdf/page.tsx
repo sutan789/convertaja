@@ -322,7 +322,7 @@ export default function SignPdf() {
                 )}
 
                 {signatureFile && !isDrawingMode && (
-                  <div className="flex items-center justify-between bg-white p-4 sm:p-6 rounded-2xl border border-emerald-200 shadow-sm">
+                  <div className="flex items-center justify-between bg-white p-4 sm:p-6 rounded-2xl border border-blue-200 shadow-sm">
                     <div className="flex items-center gap-5">
                       <div className="w-20 h-20 bg-slate-50 rounded-xl flex items-center justify-center p-2 border border-slate-200">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -330,13 +330,13 @@ export default function SignPdf() {
                       </div>
                       <div>
                         <span className="text-sm font-bold text-slate-800 flex items-center gap-2 mb-1">
-                          <Check className="text-emerald-500 w-5 h-5 bg-emerald-100 rounded-full p-0.5"/> 
+                          <Check className="text-blue-500 w-5 h-5 bg-blue-100 rounded-full p-0.5"/> 
                           Tanda Tangan Siap
                         </span>
                         <p className="text-xs text-slate-500">Lanjutkan ke langkah 2 di bawah.</p>
                       </div>
                     </div>
-                    <button onClick={() => setSignatureFile(null)} className="px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-bold hover:bg-red-100 transition-colors">
+                    <button onClick={() => setSignatureFile(null)} className="px-4 py-2 bg-slate-50 text-slate-600 rounded-lg text-sm font-bold hover:bg-slate-100 transition-colors">
                       Ganti TTD
                     </button>
                   </div>
@@ -427,14 +427,14 @@ export default function SignPdf() {
                       <button
                         onClick={handleApplySignature}
                         disabled={isProcessing}
-                        className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-4 rounded-2xl font-bold transition-all flex flex-col items-center justify-center gap-1 shadow-lg shadow-emerald-500/30 transform hover:-translate-y-1"
+                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 rounded-2xl font-bold transition-all flex flex-col items-center justify-center gap-1 shadow-lg shadow-blue-500/30 transform hover:-translate-y-1"
                       >
                         {isProcessing ? (
                           <div className="flex items-center gap-2"><Loader2 className="animate-spin" size={20}/> <span>Menyimpan...</span></div>
                         ) : (
                           <>
                             <span className="text-lg flex items-center gap-2"><Check size={20}/> Bubuhkan & Unduh</span>
-                            <span className="text-xs text-emerald-100 font-normal">Selesai Permanen</span>
+                            <span className="text-xs text-blue-200 font-normal">Selesai Permanen</span>
                           </>
                         )}
                       </button>
@@ -447,7 +447,7 @@ export default function SignPdf() {
         </div>
       ) : (
         <div className="bg-white rounded-3xl p-12 shadow-sm border border-slate-100 text-center animate-in zoom-in-95 duration-500">
-          <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-emerald-600 text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-green-500/30">
+          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-blue-500/30">
             <Check size={40} />
           </div>
           <h3 className="text-3xl font-extrabold text-slate-900 mb-4 tracking-tight">PDF Berhasil Ditandatangani!</h3>
