@@ -220,7 +220,6 @@ export default function DigitalSignature() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    setTimeout(() => router.push('/'), 1000);
   };
 
   return (
